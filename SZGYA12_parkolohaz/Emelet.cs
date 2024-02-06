@@ -27,7 +27,7 @@ namespace SZGYA12_parkolohaz
 
         public override string ToString()
         {
-            return $"{Szint}. {SzintNev}: {string.Join("; ", Szektorok)}";
+            return $"{Szint, 2}. szint | {SzintNev, 8}: {string.Join("; ", Szektorok)}";
         }
     }
 }
