@@ -1,0 +1,17 @@
+Emelet neve - Szektor sorszáma
+        Sas - 2.
+     Lajhár - 1.
+
+13. FELADAT
+ 1. szint: 0 szabad hely
+ 2. szint: 1 szabad hely
+ 3. szint: 1 szabad hely
+ 4. szint: 1 szabad hely
+ 5. szint: 0 szabad hely
+ 6. szint: 0 szabad hely
+ 7. szint: 0 szabad hely
+ 8. szint: 0 szabad hely
+ 9. szint: 0 szabad hely
+10. szint: 0 szabad hely
+11. szint: 1 szabad hely
+12. szint: 0 szabad hely
