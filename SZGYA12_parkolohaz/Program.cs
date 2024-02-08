@@ -46,7 +46,7 @@
             Console.WriteLine($"Átlag: {F10(emeletek)} \nÁtlag alatti: {atlagAlatti} \nÁtlag fölötti: {atlagFolotti}");
 
             //11. feladat
-            var sw = new StreamWriter(@"..\..\..\src\parkolohazF11.txt");
+            var sw = new StreamWriter(@"..\..\..\src\ujParkolohaz.txt");
             sw.WriteLine("Emelet neve - Szektor sorszáma");
             foreach (var e in emeletek)
             {
