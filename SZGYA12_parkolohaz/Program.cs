@@ -4,11 +4,11 @@
     {
         static string F8(List<Emelet> e) => e.MinBy(d => d.Szektorok.Sum()).SzintNev;
 
-        static Emelet F9(List<Emelet> e) => e.First(d => d.Szektorok.Contains(0));
+        static IEnumerable<Emelet> F9(List<Emelet> e) => e.Where(d => d.Szektorok.Contains(0));
 
         static double F10(List<Emelet> e) => e.SelectMany(d => d.Szektorok).Average();
 
-        static Emelet F12(List<Emelet> e) => e.First(d => d.Szektorok.Sum() == e.Max(dd => dd.Szektorok.Sum()));
+        static Emelet F12(List<Emelet> e) => e.MaxBy(d => d.Szektorok.Sum());
 
         static int F14(List<Emelet> e) => e.SelectMany(e => e.Szektorok).Count(d => d == 0);
 
@@ -30,20 +30,25 @@
             Console.WriteLine($"A legkevesebb autó a {F8(emeletek)} szinten van.");
 
             Console.WriteLine("9. feladat");
-            var f9 = F9(emeletek).Szektorok.Select((v, i) => new { v, i }).First(sz => sz.v == 0).i;
-            if (F9(emeletek) != null)
+            foreach (var i in F9(emeletek))
             {
-                Console.WriteLine($"A {F9(emeletek).Szint}. szinten, a {f9}. szektorban nincs autó.");
-            }
-            else
-            {
-                Console.WriteLine("Hiba 404!!! nincs ilyen");
+                var f9 = i.Szektorok.Select((v, i) => new { v, i }).First(sz => sz.v == 0).i + 1;
+                if (i != null)
+                {
+                    Console.WriteLine($"A {i.Szint}. szinten, a(z) {f9}. szektorban nincs autó.");
+                }
+                else
+                {
+                    Console.WriteLine("Hiba 404!!! nincs ilyen");
+                }
+
             }
 
             Console.WriteLine("10. feladat");
+            double atlagos = emeletek.SelectMany(d => d.Szektorok).Count(dd => dd == F10(emeletek));
             double atlagAlatti = emeletek.SelectMany(d => d.Szektorok).Count(dd => dd < F10(emeletek));
             double atlagFolotti = emeletek.SelectMany(d => d.Szektorok).Count(dd => dd > F10(emeletek));
-            Console.WriteLine($"Átlag: {F10(emeletek)} \nÁtlag alatti: {atlagAlatti} \nÁtlag fölötti: {atlagFolotti}");
+            Console.WriteLine($"Átlag: {Math.Round(F10(emeletek), 2)} \nÁtlagos: {atlagos} \nÁtlag alatti: {atlagAlatti} \nÁtlag fölötti: {atlagFolotti}");
 
             //11. feladat
             var sw = new StreamWriter(@"..\..\..\src\ujParkolohaz.txt");
@@ -60,7 +65,7 @@
             }
 
             Console.WriteLine("12. feladat");
-            if (F12(emeletek).Szint == emeletek.Count)
+            if (F12(emeletek).Szint == 1)
             {
                 Console.WriteLine("A legfelső emeleten van a legtöbb autó.");
             }
@@ -68,6 +73,7 @@
             {
                 Console.WriteLine($"A legtöbb autó a {F12(emeletek).SzintNev} szinten van.");
             }
+
 
             //13. feladat
             sw.WriteLine();
