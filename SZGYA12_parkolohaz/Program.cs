@@ -6,7 +6,15 @@
 
         static IEnumerable<Emelet> F9(List<Emelet> e) => e.Where(d => d.Szektorok.Contains(0));
 
-        static double F10(List<Emelet> e) => e.SelectMany(d => d.Szektorok).Average();
+        static (double atlag, double atlagos, double atlagAlatti, double atlagFeletti) F10(List<Emelet> e)
+        {
+            var atlag = e.SelectMany(d => d.Szektorok).Average();
+            double atlagos = e.SelectMany(d => d.Szektorok).Count(dd => dd == atlag);
+            double atlagAlatti = e.SelectMany(d => d.Szektorok).Count(dd => dd < atlag);
+            double atlagFeletti = e.SelectMany(d => d.Szektorok).Count(dd => dd > atlag);
+
+            return (Math.Round(atlag, 2), atlagos, atlagAlatti, atlagFeletti);
+        }
 
         static Emelet F12(List<Emelet> e) => e.MaxBy(d => d.Szektorok.Sum());
 
@@ -45,13 +53,12 @@
             }
 
             Console.WriteLine("10. feladat");
-            double atlagos = emeletek.SelectMany(d => d.Szektorok).Count(dd => dd == F10(emeletek));
-            double atlagAlatti = emeletek.SelectMany(d => d.Szektorok).Count(dd => dd < F10(emeletek));
-            double atlagFolotti = emeletek.SelectMany(d => d.Szektorok).Count(dd => dd > F10(emeletek));
-            Console.WriteLine($"Átlag: {Math.Round(F10(emeletek), 2)} \nÁtlagos: {atlagos} \nÁtlag alatti: {atlagAlatti} \nÁtlag fölötti: {atlagFolotti}");
+            
+            Console.WriteLine($"Átlag: {F10(emeletek).Item1} \nÁtlagos: {F10(emeletek).Item2} \nÁtlag alatti: {F10(emeletek).Item3} \nÁtlag fölötti: {F10(emeletek).Item4}");
 
             //11. feladat
             var sw = new StreamWriter(@"..\..\..\src\ujParkolohaz.txt");
+            sw.WriteLine("11. FELADAT");
             sw.WriteLine("Emelet neve - Szektor sorszáma");
             foreach (var e in emeletek)
             {
