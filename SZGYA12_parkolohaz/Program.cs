@@ -8,10 +8,13 @@
 
         static (double atlag, double atlagos, double atlagAlatti, double atlagFeletti) F10(List<Emelet> e)
         {
-            var atlag = e.SelectMany(d => d.Szektorok).Average();
-            double atlagos = e.SelectMany(d => d.Szektorok).Count(dd => dd == atlag);
-            double atlagAlatti = e.SelectMany(d => d.Szektorok).Count(dd => dd < atlag);
-            double atlagFeletti = e.SelectMany(d => d.Szektorok).Count(dd => dd > atlag);
+            var szektorok = e.SelectMany(d => d.Szektorok);
+            var atlag = szektorok.Average();
+
+            var atlagos = szektorok.Count(d => d == atlag);
+            //var atlagos = e.SelectMany(d => d.Szektorok).Count(d => d == e.SelectMany(d => d.Szektorok).Average());
+            var atlagAlatti = szektorok.Count(d => d < atlag);
+            var atlagFeletti = szektorok.Count(d => d > atlag);
 
             return (Math.Round(atlag, 2), atlagos, atlagAlatti, atlagFeletti);
         }
@@ -54,7 +57,7 @@
 
             Console.WriteLine("10. feladat");
             
-            Console.WriteLine($"Átlag: {F10(emeletek).Item1} \nÁtlagos: {F10(emeletek).Item2} \nÁtlag alatti: {F10(emeletek).Item3} \nÁtlag fölötti: {F10(emeletek).Item4}");
+            Console.WriteLine($"Átlag: {F10(emeletek).atlag} \nÁtlagos: {F10(emeletek).atlagos} \nÁtlag alatti: {F10(emeletek).atlagAlatti} \nÁtlag fölötti: {F10(emeletek).atlagFeletti}");
 
             //11. feladat
             var sw = new StreamWriter(@"..\..\..\src\ujParkolohaz.txt");
